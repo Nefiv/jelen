@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'prune',
-	description: 'prune',
+	description: 'Usuwamy ostatnich x wiadomości.',
 	execute(message, args) {
 		const amount = parseInt(args[0]) + 1;
 

@@ -3,7 +3,7 @@ const { pickLine } = require('../helpers.js');
 module.exports = {
 	name: 'zjedz',
 	aliases: ['jedz', 'zryj', 'żryj', 'pożryj', 'pozryj', 'pozeraj', 'szamaj', 'wszamaj'],
-	description: 'Jeleń ma coś zjeść.',
+	description: 'Dokarmiamy Jelenia.',
 	execute(message, args) {
 		message.reply(pickLine([
 			`Pyszny ${args[0]}!`,

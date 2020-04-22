@@ -2,7 +2,8 @@ const { getRndInteger } = require('../helpers.js');
 
 module.exports = {
 	name: 'k',
-	description: 'k',
+	aliases: ['d'],
+	description: 'Rzut kością o podanej po spacji liczbie oczek.',
 	execute(message, args) {
 		console.log(`args: ${args}`);
 
