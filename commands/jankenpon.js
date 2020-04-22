@@ -2,7 +2,7 @@ const { getRndInteger, pickLine } = require('../helpers.js');
 
 module.exports = {
 	name: 'gramy?',
-	aliases: ['jankenpon', 'papier', 'zagrajmy'],
+	aliases: ['jankenpon', 'papier', 'zagrajmy', 'grasz?', 'zagramy?'],
 	description: 'Gramy z Jeleniem w papier-kamień-nozyce.',
 	execute(message) {
 

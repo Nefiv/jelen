@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { token, main_prefix, prefixes, default_cooldown } = require('./config.json');
+const { fixSpelling } = require('./helpers.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -29,6 +30,8 @@ client.on('message', message => {
 	console.log(message.content);
 
 	if (message.author.bot) return;
+
+	fixSpelling(message);
 
 	const used_prefix = getUsedPrefix(message.content.toLowerCase());
 
