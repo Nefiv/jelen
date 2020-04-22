@@ -1,5 +1,6 @@
 {
-	"prefix": "!",
+	"main_prefix": "!",
+	"prefixes": ["!", "jeleniu", "jeleniu ", "jeleniu, "],
 	"token": "NzAxNDIwNjM0MDg0OTk5MTg4.XpxRfg.-WTVf9bV33cYmy344fKO77_22xc",
 	"default_cooldown": 2,
 	"passwords_array": ["please", "dont", "hack", "me"],

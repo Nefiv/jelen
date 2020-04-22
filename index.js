@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { token, prefix, default_cooldown } = require('./config.json');
+const { token, main_prefix, prefixes, default_cooldown } = require('./config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -17,56 +17,37 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-const getRndInteger = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-
-const pickLine = (args) => {
-	return args[getRndInteger(0, args.length)];
+const getUsedPrefix = (message) => {
+	let prefix;
+	prefixes.forEach(p => {
+		if(message.startsWith(p)) prefix = p;
+	});
+	return prefix;
 };
 
 client.on('message', message => {
 	console.log(message.content);
 
-	const lowerCaseMessage = message.content.toLowerCase();
+	if (message.author.bot) return;
 
-	if(lowerCaseMessage.startsWith('jeleniu masz') || lowerCaseMessage.startsWith('jeleniu, masz')) {
-		message.reply(pickLine([
-			'chyba ty',
-			'jeżem się podcieraj...',
-			'wąchaj skarpety',
-			'sram na Twoją polanę',
-			'to sama prawda ;(',
-			'sklej pizde',
-			'sklej pizde lapsie pierdolony',
-			'sklej pizde lapsie pierdolony Twoja stara to chuj',
-			'sklej pizde lapsie pierdolony Twoja stara to chuj, nie umiesz jeść bananów a Mikołaj nie istnieje']));
-	}
-	else if(lowerCaseMessage.startsWith('jeleniu') || lowerCaseMessage.startsWith('jeleniu,')) {
-		message.reply(pickLine([
-			'Co est?',
-			'Czego?',
-			'Słucham?',
-			'Uuuu! Uuu uuuu!',
-			'Aha?',
-			'No nie wieeeem...',
-			'Dobra juz dobra',
-			'Co znowu?',
-			'Dajcie mi święty spokój, jem sianko',
-			'Lubie sianko',
-			'Sianko?',
-			'POMOCY JESTEM TU UWIĘZIONY!',
-		]));
-	}
+	const used_prefix = getUsedPrefix(message.content.toLowerCase());
 
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if(!used_prefix) return;
 
-	const args = message.content.slice(prefix.length).split(/ +/);
+	const messageWithoutPrefix = message.content.slice(used_prefix.length);
+	const args = messageWithoutPrefix.split(/ +/);
+	console.log(`args: ${args}`);
+	const commandName = args[0].toLowerCase();
 
-	const commandName = args.shift().toLowerCase();
-
-	const command = client.commands.get(commandName)
+	let command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-	if (!command) return;
+	if (!command) {
+		command = client.commands.get('default');
+	}
+	else {
+		args.shift();
+	}
 
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('Nie w wiadomości prywatnej!');
@@ -75,7 +56,7 @@ client.on('message', message => {
 	if (command.args && !args.length) {
 		let reply = message.channel.send(`Zabrakło argumentów, ${message.author}!`);
 		if (command.usage) {
-			reply += `\nPoprawne uzycie: \`${prefix}${command.name} ${command.usage}\``;
+			reply += `\nPoprawne uzycie: \`${main_prefix}${command.name} ${command.usage}\``;
 		}
 		return message.channel.send(reply);
 	}
@@ -100,6 +81,7 @@ client.on('message', message => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
+		console.log(`args: ${args}`);
 		command.execute(message, args);
 	}
 	catch (error) {
