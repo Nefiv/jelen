@@ -1,6 +1,9 @@
 module.exports.getRndInteger = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
 module.exports.pickLine = (args) => {
+	if(typeof args === 'string') {
+		return args;
+	}
 	return args[module.exports.getRndInteger (0, args.length)];
 };
 
@@ -22,19 +25,19 @@ module.exports.jsonReader = (filePath, cb) => {
 };
 
 module.exports.fixSpelling = (message) => {
-	module.exports.jsonReader('./dict.json', (err, dict) => {
+	this.jsonReader('./dict.json', (err, dict) => {
 		if (err) {
 			console.log(err);
 			return;
 		}
 
-		console.log(dict);
+		// console.log(dict);
 
 		for (const [key, value] of Object.entries(dict)) {
-			console.log(key, value);
+			// console.log(key, value);
 			if(message.content.indexOf(key) > -1) {
 				console.log(`Found usage of ${key} in message: ${message.content}`);
-				message.reply(value);
+				message.reply(this.pickLine(value));
 			}
 		}
 	});

@@ -12,18 +12,18 @@ module.exports = {
 		let poprawne;
 		if(args[1] === 'na') {
 			// poprawne = args[2];
-			poprawne = args.slice(2, args.length).join(' ');
+			poprawne = args.slice(2, args.length).join(' ').split('LUB');
 		}
 		else {
 			// poprawne = args[1];
-			poprawne = args.slice(1, args.length).join(' ');
+			poprawne = args.slice(1, args.length).join(' ').split('LUB');
 		}
 
 		jsonReader('./dict.json', (err, dict) => {
 			if (err) {
 				console.log(err);
 			}
-			console.log(dict);
+			// console.log(dict);
 
 			let dictionary = {};
 
@@ -34,11 +34,11 @@ module.exports = {
 			// dictionary[`${bledne}`] = poprawne;
 			dictionary[bledne] = poprawne;
 
-			console.log(dictionary);
+			// console.log(dictionary);
 
 			const jsonString = JSON.stringify(dictionary);
 
-			console.log(jsonString);
+			// console.log(jsonString);
 
 			fs.writeFile('./dict.json', jsonString, err => {
 				if (err) {
