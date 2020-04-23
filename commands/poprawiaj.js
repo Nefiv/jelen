@@ -3,7 +3,7 @@ const { jsonReader } = require('../helpers.js');
 
 module.exports = {
 	name: 'poprawiaj',
-	aliases: ['koryguj'],
+	aliases: ['koryguj', 'zamieniaj', 'popraw', 'zamień', 'zamien', 'zmien', 'zmień', 'zmieniaj'],
 	description: 'Ucz lamusów poprawnej polszczyzny.',
 	execute(message, args) {
 		console.log(`args: ${args}`);
