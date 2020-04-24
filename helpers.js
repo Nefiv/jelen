@@ -31,11 +31,14 @@ module.exports.fixSpelling = (message) => {
 			return;
 		}
 
+		const words = message.content.split(/ +/);
+
 		// console.log(dict);
 
 		for (const [key, value] of Object.entries(dict)) {
 			// console.log(key, value);
-			if(message.content.indexOf(key) > -1) {
+			// if(message.content.indexOf(key) > -1) {
+			if(words.includes(key)) {
 				console.log(`Found usage of ${key} in message: ${message.content}`);
 				message.reply(this.pickLine(value));
 			}

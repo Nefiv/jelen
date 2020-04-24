@@ -14,23 +14,20 @@ module.exports = {
 			if (err) {
 				console.log('Error reading a file', err);
 			}
-			console.log(dict);
 
 			if(!dict) {
 				return;
 			}
 
-			console.log('Dictionary before deletion:', dict);
-			console.log(dict);
+			console.log('Dictionary before deletion:\n', dict);
 
 			delete dict[toRemove];
 
-			console.log('Dictionary after deletion:');
-			console.log(dict);
+			console.log('Dictionary after deletion:\n', dict);
 
 			const jsonString = JSON.stringify(dict);
 
-			console.log(jsonString);
+			console.log('String to save:\n', jsonString);
 
 			fs.writeFile('./dict.json', jsonString, err => {
 				if (err) {
